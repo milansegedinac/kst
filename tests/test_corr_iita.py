@@ -10,8 +10,8 @@ class CorrIitaTest(unittest.TestCase):
         A = [[(2, 1)], [(0, 1), (0, 2), (2, 0), (2, 1)]]
         response = corr_iita(data_frame, A)
 
-        self.assertItemsEqual([0.18518518518518515, 0.16666666666666666], response['diff.value'])
-        self.assertItemsEqual([0.0, 0.5], response['error.rate'])
+        self.assertCountEqual([0.18518518518518515, 0.16666666666666666], response['diff.value'])
+        self.assertCountEqual([0.0, 0.5], response['error.rate'])
 
 
 if __name__ == '__main__':
