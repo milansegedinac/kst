@@ -77,7 +77,7 @@ def simu(items, size, ce, lg, delta, imp=None):
         P = imp2state(imp, items)
 
     # simulating the dataset
-    sim = np.zeros((items, items), dtype=np.int8)
+    sim = np.zeros((size, items), dtype=np.int8)
 
     for i in range(size):
         sim[i,] = P[np.random.randint(0, P.shape[0], 1), ]
