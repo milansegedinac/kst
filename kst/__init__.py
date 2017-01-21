@@ -4,3 +4,5 @@ from .corr_iita import corr_iita
 from .mini_iita import mini_iita
 from .ind_gen import ind_gen
 from .iita import iita
+from .imp2state import imp2state
+from .simu import simu
