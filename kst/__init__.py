@@ -6,3 +6,4 @@ from .ind_gen import ind_gen
 from .iita import iita
 from .imp2state import imp2state
 from .simu import simu
+from .print_iita import print_iita

@@ -3,6 +3,18 @@ from kst import imp2state
 
 
 def simu(items, size, ce, lg, delta, imp=None):
+    """
+    Data and Quasi Order Simulation Tool
+
+    :param items: number of items of the domain taken as a basis for the simulation
+    :param size: number of response patterns to be simulated (the sample size)
+    :param ce: probability for a careless error
+    :param lg: probability for a lucky guess
+    :param delta: probability for adding an item pair to the randomly generated quasi order
+    :param imp: list of implications (assumed to be a quasi order) used for simulating the data
+    :return: dictionary
+    """
+
     R = set()
 
     if imp is None:

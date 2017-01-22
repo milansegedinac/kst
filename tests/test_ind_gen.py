@@ -10,9 +10,9 @@ class IndGenTest(unittest.TestCase):
         result = ind_gen(b)
 
         self.assertEqual(3, len(result))
-        self.assertIn([(2, 1)], result)
-        self.assertIn([(2, 1), (0, 1), (0, 2), (2, 0)], result)
-        self.assertIn([(2, 1), (0, 1), (0, 2), (2, 0), (1, 0), (1, 2)], result)
+        self.assertEqual([(2, 1)], result[0])
+        self.assertEqual([(0, 1), (0, 2), (2, 0), (2, 1)], result[1])
+        self.assertEqual([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)], result[2])
 
 
 if __name__ == '__main__':

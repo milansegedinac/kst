@@ -9,10 +9,19 @@ from kst import corr_iita
 
 
 def iita(dataset, v):
-    if (not isinstance(dataset, pd.DataFrame) and not isinstance(dataset, np.ndarray)) or (dataset.shape[1] == 1):
-        sys.exit('data must be either a numeric matrix or a data.frame, with at least two columns.')
+    """
+    Inductive Item Tree Analysis
+    Performs one of the three inductive item tree analysis algorithms (minimized corrected, corrected and original).
 
-    if sum(np.logical_not(np.logical_or(dataset == 0, dataset == 1)).sum(skipna=False)) != 0:
+    :param dataset: dataframe or matrix consisted of ones and zeros
+    :param v: algorithm: v=1 (minimized corrected), v=2 (corrected) and v=3 (original)
+    :return: dictionary
+    """
+
+    if (not isinstance(dataset, pd.DataFrame) and not isinstance(dataset, np.ndarray)) or (dataset.shape[1] == 1):
+        sys.exit('data must be either a numeric matrix or a dataframe, with at least two columns.')
+
+    if sum(np.logical_not(np.logical_or(dataset == 0, dataset == 1)).sum()) != 0:
         sys.exit('data must contain only 0 and 1')
 
     if v not in (1, 2, 3):

@@ -1,14 +1,28 @@
 import sys
 import numpy as np
+import pandas as pd
 from kst import ob_counter
 
 
 def corr_iita(dataset, A):
-    b = ob_counter(dataset)
+    """
+    Corrected Inductive Item Tree Analysis
+    Performs the corrected inductive item tree analysis procedure and returns the corresponding diff values.
+
+    :param dataset: dataframe or matrix consisted of ones and zeros
+    :param A: list of competing quasi orders
+    :return: dictionary
+    """
+
+    data = dataset
+    if isinstance(dataset, pd.DataFrame):
+        data = dataset.as_matrix()
+
+    b = ob_counter(data)
     if sum(b.sum(axis=0) == 0):
         sys.exit('Each item must be solved at least once')
 
-    n, m = dataset.shape
+    n, m = data.shape
 
     bs = [None] * len(A)
     for i in range(len(A)):
@@ -20,7 +34,7 @@ def corr_iita(dataset, A):
     # computation of error rate
     for k in range(len(A)):
         for i in A[k]:
-            error[k] += (float(b[int(i[0])][int(i[1])]) / sum(dataset.ix[:, int(i[1])]))
+            error[k] += (b[i[0]][i[1]] / sum(data[:, i[1]]))
         if not A[k]:
             error[k] = None
         else:
@@ -30,7 +44,7 @@ def corr_iita(dataset, A):
     all_imp = set()
     for i in range(m - 1):
         for j in range(i + 1, m):
-            all_imp = all_imp.union(all_imp, set([(i, j), (j, i)]))
+            all_imp = all_imp.union(all_imp, {(i, j), (j, i)})
 
     for k in range(len(A)):
         if not A[k]:
@@ -38,11 +52,11 @@ def corr_iita(dataset, A):
         else:
             for i in all_imp:
                 if i in A[k]:
-                    bs[k][int(i[0])][int(i[1])] = error[k] * sum(dataset.ix[:, int(i[1])])
+                    bs[k][i[0]][i[1]] = error[k] * sum(data[:, i[1]])
                 if (i not in A[k]) and ((i[1], i[0]) not in A[k]):
-                    bs[k][int(i[0])][int(i[1])] = (1.0 - float(sum(dataset.ix[:, int(i[0])])) / n) * sum(dataset.ix[:, int(i[1])])
+                    bs[k][i[0]][i[1]] = (1.0 - sum(data[:, i[0]]) / n) * sum(data[:, i[1]])
                 if (i not in A[k]) and ((i[1], i[0]) in A[k]):
-                    bs[k][int(i[0])][int(i[1])] = float(sum(dataset.ix[:, int(i[1])])) - float(sum(dataset.ix[:, int(i[0])])) + float(sum(dataset.ix[:, int(i[0])])) * error[k]
+                    bs[k][i[0]][i[1]] = sum(data[:, i[1]]) - sum(data[:, i[0]]) + sum(data[:, i[0]]) * error[k]
             diff_value_alt[k] = sum(sum((b - bs[k]) ** 2)) / (m ** 2 - m)
 
     return {'diff.value': diff_value_alt, 'error.rate': error}

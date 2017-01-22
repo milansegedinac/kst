@@ -2,6 +2,15 @@ import numpy as np
 
 
 def imp2state(imp, items):
+    """
+    Transformation from Implications to Knowledge States
+    Transforms a set of implications to the corresponding set of knowledge states (the quasi ordinal knowledge space).
+
+    :param imp: list of implications
+    :param items: number of items
+    :return: matrix consisted of ones and zeros
+    """
+
     R_2 = np.ones((items, items))
     for i in range(items):
         for j in range(items):

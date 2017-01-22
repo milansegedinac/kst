@@ -1,4 +1,12 @@
 def ind_gen(b):
+    """
+    Inductive Generation Procedure
+    Generates inductively a list of competing quasi orders.
+
+    :param b: matrix of the numbers of counterexamples for all pairs of items
+    :return: list of inductively generated quasi orders
+    """
+
     (n, m) = b.shape
 
     # set of all pairs with a maximum of k-1 counterexamples
@@ -13,12 +21,12 @@ def ind_gen(b):
     S.append([])
     for i in range(m):
         for j in range(m):
-            if (b[i, j] == b.min()) and (i != j):
+            if (i != j) and (b[i, j] == b.min()):
                 S[0].append((i, j))
 
     A.append(list(S[0]))
 
-    # inductive gneration process
+    # inductive generation process
     elements = list(set(b.flatten().ravel()))
     elements.sort()
     if 0 in elements:
@@ -34,7 +42,7 @@ def ind_gen(b):
         # building of S
         for i in range(m):
             for j in range(m):
-                if (b[i, j] <= element) and (i != j) and ((i, j) not in A[k-1]):
+                if (i != j) and (b[i, j] <= element) and ((i, j) not in A[k-1]):
                     S[k].append((i, j))
 
         # transitivity test
@@ -43,12 +51,14 @@ def ind_gen(b):
             brake_test = 1
             while brake_test != 0:
                 brake = list(M[k])
-                for i in M[k]:
+                for i in list(M[k]):
                     for h in range(m):
                         if (h != i[0]) and (h != i[1]) and ((i[1], h) in (A[k-1] + M[k])) and ((i[0], h) not in (A[k-1] + M[k])):
-                            M[k].remove(i)
+                            if i in M[k]:
+                                M[k].remove(i)
                         if (h != i[0]) and (h != i[1]) and ((h, i[0]) in (A[k-1] + M[k])) and ((h, i[1]) not in (A[k-1] + M[k])):
-                            M[k].remove(i)
+                            if i in M[k]:
+                                M[k].remove(i)
                 if brake == M[k]:
                     brake_test = 0
             A[k] = A[k-1] + M[k]
@@ -56,8 +66,10 @@ def ind_gen(b):
         k += 1
 
     # deletion of empty and duplicated quasi orders
-    A = [list(x) for x in set([tuple(x) for x in A])]
-    if [] in A:
-        A.remove([])
+    A = {frozenset(x) for x in A}
+    A.discard(set())
+    # sort
+    A = [sorted(list(x)) for x in A]
+    A.sort(key=len)
 
     return A
