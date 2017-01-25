@@ -7,3 +7,4 @@ from .iita import iita
 from .imp2state import imp2state
 from .simu import simu
 from .print_iita import print_iita
+from .hasse import hasse
