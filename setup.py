@@ -6,5 +6,5 @@ setup(
     description='Knowledge Space Theory',
     url='https://github.com/milansegedinac/kst',
     packages=find_packages(),
-    install_requires=['numpy', 'pandas']
+    install_requires=['numpy', 'pandas', 'pydot', 'matplotlib']
 )
