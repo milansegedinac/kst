@@ -33,8 +33,11 @@ def hasse(imp, items):
                     implications[j] = (implications[j][0], i[0])
 
     implications = list(set(implications))
+    for i in list(implications):
+        if i[0] == i[1]:
+            implications.remove(i)
 
-    for i in implications:
+    for i in list(implications):
         for j in range(items):
             if (i[0] != j) and (i[1] != j) and ((i[0], j) in implications) and ((i[1], j) in implications):
                 implications.remove((i[0], j))
@@ -46,6 +49,22 @@ def hasse(imp, items):
     graph = pydot.Dot(graph_type='graph')
     for i in implications:
         graph.add_edge(pydot.Edge(i[0], i[1]))
+
+    # standalone nodes
+    for i in range(items):
+        found = False
+        for implication in implications:
+            if i in implication:
+                found = True
+                break
+        if not found:
+            parallel = False
+            for key, value in parallel_items.items():
+                if i in value:
+                    parallel = True
+                    break
+            if not parallel:
+                graph.add_node(pydot.Node(i))
 
     fout = tempfile.NamedTemporaryFile(suffix=".png")
     graph.write(fout.name, format="png")
