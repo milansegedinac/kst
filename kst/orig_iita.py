@@ -24,9 +24,9 @@ def orig_iita(dataset, A):
 
     n, m = data.shape
 
-    bs = [None] * len(A)
+    bs = []
     for i in range(len(A)):
-        bs[i] = np.zeros(b.shape)
+        bs.insert(i, np.zeros(b.shape))
 
     diff_value_alt = np.repeat(0.0, len(A))
     error = np.repeat(0.0, len(A))
@@ -34,7 +34,7 @@ def orig_iita(dataset, A):
     # computation of error rate
     for k in range(len(A)):
         for i in A[k]:
-            error[k] += (b[i[0]][i[1]] / sum(data[:, i[1]]))
+            error[k] += (b[i[0]][i[1]] / data[:, i[1]].sum())
         if not A[k]:
             error[k] = None
         else:
@@ -52,9 +52,9 @@ def orig_iita(dataset, A):
         else:
             for i in all_imp:
                 if i in A[k]:
-                    bs[k][i[0]][i[1]] = error[k] * sum(data[:, i[1]])
+                    bs[k][i[0]][i[1]] = error[k] * data[:, i[1]].sum()
                 else:
-                    bs[k][i[0]][i[1]] = (1.0 - sum(data[:, i[0]]) / n) * sum(data[:, i[1]]) * (1.0 - error[k])
-            diff_value_alt[k] = sum(sum((b - bs[k])**2)) / (m**2 - m)
+                    bs[k][i[0]][i[1]] = (1.0 - data[:, i[0]].sum() / n) * data[:, i[1]].sum() * (1.0 - error[k])
+            diff_value_alt[k] = ((b - bs[k]) ** 2).sum() / (m ** 2 - m)
 
     return {'diff.value': diff_value_alt, 'error.rate': error}

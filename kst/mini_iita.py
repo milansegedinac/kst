@@ -20,13 +20,13 @@ def mini_iita(dataset, A):
     b = ob_counter(data)
     n, m = data.shape
 
-    bs = [None] * len(A)
+    bs_num = []
     for i in range(len(A)):
-        bs[i] = np.zeros((m, m))
+        bs_num.insert(i, np.zeros((m, m)))
 
-    p = [None] * m
+    p = []
     for i in range(m):
-        p[i] = sum(data[:, i])
+        p.insert(i, data[:, i].sum())
 
     diff_value_alt = np.repeat(0.0, len(A))
     error = np.repeat(0.0, len(A))
@@ -36,12 +36,12 @@ def mini_iita(dataset, A):
         x = np.repeat(0.0, 4)
         for i in range(m):
             for j in range(m):
-                if ((i, j) in A[k]) and (i != j):
-                    x[1] += -2 * b[i][j] * p[j]
-                    x[3] += 2 * p[j]**2
-                if ((i, j) not in A[k]) and ((j, i) in A[k]) and (i != j):
-                    x[0] += -2 * b[i][j] + 2 * p[i] * p[j] - 2 * p[i]**2
-                    x[2] += 2 * p[i]**2
+                if (i != j) and ((i, j) in A[k]):
+                    x[1] += -2 * b[i, j] * p[j]
+                    x[3] += 2 * p[j] ** 2
+                if (i != j) and ((i, j) not in A[k]) and ((j, i) in A[k]):
+                    x[0] += -2 * b[i, j] * p[i] + 2 * p[i] * p[j] - 2 * p[i] ** 2
+                    x[2] += 2 * p[i] ** 2
 
         error[k] = -(x[0] + x[1]) / (x[2] + x[3])
 
@@ -57,11 +57,11 @@ def mini_iita(dataset, A):
         else:
             for i in all_imp:
                 if i in A[k]:
-                    bs[k][i[0]][i[1]] = error[k] * sum(data[:, i[1]])
+                    bs_num[k][i[0]][i[1]] = error[k] * data[:, i[1]].sum()
                 if (i not in A[k]) and ((i[1], i[0]) not in A[k]):
-                    bs[k][i[0]][i[1]] = (1.0 - sum(data[:, i[0]]) / n) * sum(data[:, i[1]])
+                    bs_num[k][i[0]][i[1]] = (1.0 - data[:, i[0]].sum() / n) * data[:, i[1]].sum()
                 if (i not in A[k]) and ((i[1], i[0]) in A[k]):
-                    bs[k][i[0]][i[1]] = sum(data[:, i[1]]) - sum(data[:, i[0]]) + sum(data[:, i[0]]) * error[k]
-            diff_value_alt[k] = sum(sum((b - bs[k]) ** 2)) / (m ** 2 - m)
+                    bs_num[k][i[0]][i[1]] = data[:, i[1]].sum() - data[:, i[0]].sum() + data[:, i[0]].sum() * error[k]
+            diff_value_alt[k] = ((b - bs_num[k]) ** 2).sum() / (m ** 2 - m)
 
     return {'diff.value': diff_value_alt, 'error.rate': error}
