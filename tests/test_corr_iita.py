@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 from kst import corr_iita
 
-
 class CorrIitaTest(unittest.TestCase):
 
     def test_corr_iita_with_dataframe(self):
