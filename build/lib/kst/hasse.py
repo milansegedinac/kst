@@ -4,13 +4,15 @@ import matplotlib.image as mpimg
 import tempfile
 import os
 
-def hasse(imp, items, dir_path = None):
+def hasse(imp, items, dir_path = None, labels = None):
     """
     Hasse diagram of Surmise Relation
     Plots the Hasse diagram of surmise relation.
 
     :param imp: list of implications
     :param items: number of items of the domain
+    :param dir_path: path to the png directory
+    :param labels: string labels for items
     :return: produces a plot and returns a list of the equally informative items
     """
 
@@ -57,8 +59,13 @@ def hasse(imp, items, dir_path = None):
         implications[i] = (implications[i][1], implications[i][0])
 
     graph = pydot.Dot(graph_type='graph')
-    for i in implications:
-        graph.add_edge(pydot.Edge(i[0], i[1]))
+    print(implications)
+    if labels:
+        for i in implications:
+            graph.add_edge(pydot.Edge(str(labels[int(i[0])]), str(labels[int(i[1])])))
+    else:
+        for i in implications:
+            graph.add_edge(pydot.Edge(i[0], i[1]))
 
     # standalone nodes
     for i in range(items):
