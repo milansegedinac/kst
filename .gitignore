@@ -8,6 +8,4 @@
 /*.egg-info
 
 .idea/
-
-# Pokretanje aplikacije
-pokretanje.txt
+/env/
