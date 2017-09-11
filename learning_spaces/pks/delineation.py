@@ -1,0 +1,2 @@
+def delineate():
+    return None
