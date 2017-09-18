@@ -8,7 +8,7 @@ from conversion import convert_as_pattern, convert_as_bin_mat
 class BLIM:
     """
     Fits a basic local independence model (BLIM) for probabilistic knowledge structures by
-    minimum disperancy maximum likelihood estimation
+    Minimum Discrepancy and Maximum Likelihood estimation
     """
 
     def __init__(self, k, n_r, method="MD", r=None, p_k=None, beta=None, eta=None, rand_init=False, inc_radius=0,
@@ -234,25 +234,49 @@ class BLIM:
         print(self.eta)
 
     def log_likelihood(self):
-        return None
+        """
+        Log-Likelihood for BLIM object
+        """
+        return self.log_lik
 
     def number_of_observations(self):
+        """
+        Number of observations
+        """
         return self.n_patterns
 
-    def residuals(self):
-        return None
-
-    def display(self):
-        return None
-
     def simulate(self):
-        return None
+        """
+        Simulates responses from the distribution corresponding to a fitted BLIM model object.
+        :return: dataframe of frequencies of response patterns
+        """
+        seq_len = list(range(len(self.p_k.values)))
+        states_id = np.random.choice(seq_len, size=self.n_total, replace=True, p=self.p_k.values)
+        beta_inv = 1 - self.beta
+        # P(resp = 1 | K)
+        p_1_k = np.multiply(np.asmatrix(self.k), np.asarray(beta_inv.values)) + np.multiply(np.asmatrix(1 - self.k), np.asarray(self.eta.values))
+        p_1_k_df = pd.DataFrame(np.transpose(p_1_k), columns=convert_as_pattern(self.k))
+        # initialize response matrix
+        r_mat = pd.DataFrame(0, index=np.arange(self.n_total), columns=list(self.k))
+        # draw a response
+        for i in range(self.n_total):
+            r_mat.loc[i, :] = np.random.binomial(n=1, size=self.n_items, p=np.array(p_1_k_df.iloc[:, states_id[i]]))
+
+        patterns, frequencies = convert_as_pattern(r_mat, freq=True)
+        return pd.DataFrame([frequencies], columns=patterns)
 
     def deviance(self):
-        return self.goodness_of_fit[0]
+        """
+        Deviance
+        """
+        return self.goodness_of_fit['g2']
 
     def coef(self):
-        return None
+        """
+        BLIM object parameters
+        :return: dataframe for beta, eta nad p_k
+        """
+        return self.beta, self.eta, self.p_k
 
 
 def calculate_p_r_k(k_row, beta, eta, r):
@@ -331,6 +355,7 @@ if __name__ == "__main__":
     n_r["11111"] = 77
 
     blim_md = BLIM(k, n_r)
+    print(blim_md.simulate())
     print(blim_md.describe())
     blim_ml = BLIM(k, n_r, method="ML")
     print(blim_ml.describe())
