@@ -1,6 +1,5 @@
-import pandas as pd
 import itertools
-from conversion import convert_as_bin_mat
+from .conversion import convert_as_bin_mat
 
 
 def delineate(skill_fun, item_id=0):
@@ -74,11 +73,3 @@ def contains_string(src, dest):
         if combination in dest:
             return True
     return False
-
-
-if __name__ == "__main__":
-    df = pd.read_csv("test_delineate.csv")
-    ddf, cls = delineate(df)
-    print(ddf)
-    print()
-    print(cls)

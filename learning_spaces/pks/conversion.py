@@ -71,12 +71,3 @@ def convert_as_bin_mat(data, col_names=None):
         values.append(value)
 
     return pd.DataFrame(values, columns=header)
-
-
-if __name__ == "__main__":
-    df = pd.read_csv("test_data.csv")
-    print(df)
-    pattern = convert_as_pattern(df, as_letters=False)
-    print(pattern)
-    bin_mat = convert_as_bin_mat(pattern)
-    print(bin_mat)

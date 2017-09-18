@@ -1,5 +1,4 @@
-import pandas as pd
-from conversion import convert_as_pattern
+from .conversion import convert_as_pattern
 
 
 def is_forward_graded(data):
@@ -40,10 +39,3 @@ def is_backward_graded(data):
             graded.append(pattern in data_pattern)
         ret_val[item] = all(graded)
     return ret_val
-
-
-if __name__ == "__main__":
-    df = pd.read_csv("test_data.csv")
-    print(is_forward_graded(df))
-    print(is_backward_graded(df))
-

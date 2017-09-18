@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import chi2
-from collections import OrderedDict
-from conversion import convert_as_pattern, convert_as_bin_mat
+from .conversion import convert_as_pattern, convert_as_bin_mat
 
 
 class BLIM:
@@ -317,45 +316,3 @@ def numpy_list_to_list(numpy_list):
     """
     ret_val = [x[0] for x in numpy_list]
     return ret_val
-
-if __name__ == "__main__":
-    k = pd.read_csv("test_data.csv")
-    n_r = OrderedDict()
-    n_r["00000"] = 80
-    n_r["10000"] = 92
-    n_r["01000"] = 89
-    n_r["00100"] = 3
-    n_r["00010"] = 2
-    n_r["00001"] = 1
-    n_r["11000"] = 89
-    n_r["10100"] = 16
-    n_r["10010"] = 18
-    n_r["10001"] = 10
-    n_r["01100"] = 18
-    n_r["01010"] = 20
-    n_r["01001"] = 4
-    n_r["00110"] = 2
-    n_r["00101"] = 2
-    n_r["00011"] = 3
-    n_r["11100"] = 89
-    n_r["11010"] = 89
-    n_r["11001"] = 19
-    n_r["10110"] = 16
-    n_r["10101"] = 16
-    n_r["10011"] = 3
-    n_r["01110"] = 18
-    n_r["01101"] = 16
-    n_r["01011"] = 2
-    n_r["00111"] = 2
-    n_r["11110"] = 73
-    n_r["11101"] = 82
-    n_r["11011"] = 19
-    n_r["10111"] = 15
-    n_r["01111"] = 15
-    n_r["11111"] = 77
-
-    blim_md = BLIM(k, n_r)
-    print(blim_md.simulate())
-    print(blim_md.describe())
-    blim_ml = BLIM(k, n_r, method="ML")
-    print(blim_ml.describe())
