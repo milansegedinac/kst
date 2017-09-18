@@ -1,8 +1,10 @@
 import unittest
-from kst import simu
+import sys
+sys.path.append('../learning_spaces/')
+from learning_spaces.kst import simu
 
 
-class SimuTest(unittest.TestCase):
+class TestSimu(unittest.TestCase):
 
     def test_simu(self):
         result = simu(items=3, size=3, ce=0.0, lg=0.0, delta=0.0)

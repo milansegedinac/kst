@@ -1,9 +1,11 @@
 import unittest
 import numpy as np
-from kst import ind_gen
+import sys
+sys.path.append('../learning_spaces/')
+from learning_spaces.kst import ind_gen
 
 
-class IndGenTest(unittest.TestCase):
+class TestIndGen(unittest.TestCase):
 
     def test_ind_gen(self):
         b = np.array([[0, 1, 1], [2, 0, 1], [1, 0, 0]])

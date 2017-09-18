@@ -1,10 +1,12 @@
 import unittest
 import pandas as pd
 import numpy as np
-from kst import iita
+import sys
+sys.path.append('../learning_spaces/')
+from learning_spaces.kst import iita
 
 
-class IitaTest(unittest.TestCase):
+class TestIita(unittest.TestCase):
 
     def setUp(self):
         self.dataframe = pd.DataFrame({'a': [1, 0, 1], 'b': [0, 1, 0], 'c': [0, 1, 1]})
@@ -43,7 +45,7 @@ class IitaTest(unittest.TestCase):
     def test_corr_iita_with_dataframe(self):
         response = iita(self.dataframe, v=2)
 
-        self.assertEqual([0.18518518518518515, 0.16666666666666666, 0.21527777777777779], response['diff'].tolist())
+        self.assertEqual([0.18518518518518515, 0.16666666666666666, 0.215277777777777776], response['diff'].tolist())
         self.assertEqual(0.5, response['error.rate'])
         self.assertEqual([(0, 1), (0, 2), (2, 0), (2, 1)], response['implications'])
         self.assertEqual(1, response['selection.set.index'])
@@ -52,7 +54,7 @@ class IitaTest(unittest.TestCase):
     def test_orig_iita_with_dataframe(self):
         response = iita(self.dataframe, v=3)
 
-        self.assertEqual([0.20370370370370369, 0.39814814814814814, 0.21527777777777779], response['diff'].tolist())
+        self.assertEqual([0.20370370370370369, 0.39814814814814814, 0.215277777777777776], response['diff'].tolist())
         self.assertEqual(0, response['error.rate'])
         self.assertEqual([(2, 1)], response['implications'])
         self.assertEqual(0, response['selection.set.index'])
@@ -70,7 +72,7 @@ class IitaTest(unittest.TestCase):
     def test_corr_iita_with_matrix(self):
         response = iita(self.matrix, v=2)
 
-        self.assertEqual([0.18518518518518515, 0.16666666666666666, 0.21527777777777779], response['diff'].tolist())
+        self.assertEqual([0.18518518518518515, 0.16666666666666666, 0.215277777777777776], response['diff'].tolist())
         self.assertEqual(0.5, response['error.rate'])
         self.assertEqual([(0, 1), (0, 2), (2, 0), (2, 1)], response['implications'])
         self.assertEqual(1, response['selection.set.index'])
@@ -79,7 +81,7 @@ class IitaTest(unittest.TestCase):
     def test_orig_iita_with_matrix(self):
         response = iita(self.matrix, v=3)
 
-        self.assertEqual([0.20370370370370369, 0.39814814814814814, 0.21527777777777779], response['diff'].tolist())
+        self.assertEqual([0.20370370370370369, 0.39814814814814814, 0.215277777777777776], response['diff'].tolist())
         self.assertEqual(0, response['error.rate'])
         self.assertEqual([(2, 1)], response['implications'])
         self.assertEqual(0, response['selection.set.index'])

@@ -1,8 +1,10 @@
 import unittest
-from kst import imp2state
+import sys
+sys.path.append('../learning_spaces/')
+from learning_spaces.kst import imp2state
 
 
-class Imp2stateTest(unittest.TestCase):
+class TestImp2state(unittest.TestCase):
 
     def setUp(self):
         # data-provider alternative

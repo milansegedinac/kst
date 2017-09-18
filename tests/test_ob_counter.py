@@ -1,10 +1,12 @@
 import unittest
 import pandas as pd
 import numpy as np
-from kst import ob_counter
+import sys
+sys.path.append('../learning_spaces/')
+from learning_spaces.kst import ob_counter
 
 
-class ObCounterTest(unittest.TestCase):
+class TestObCounter(unittest.TestCase):
 
     def test_ob_counter_with_dataframe(self):
         data_frame = pd.DataFrame({'a': [1, 0, 1], 'b': [0, 1, 0], 'c': [0, 1, 1]})
