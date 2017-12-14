@@ -59,7 +59,7 @@ def mini_iita(dataset, A):
                 if i in A[k]:
                     bs_num[k][i[0]][i[1]] = error[k] * data[:, i[1]].sum()
                 if (i not in A[k]) and ((i[1], i[0]) not in A[k]):
-                    bs_num[k][i[0]][i[1]] = (1.0 - data[:, i[0]].sum() / n) * data[:, i[1]].sum()
+                    bs_num[k][i[0]][i[1]] = (1.0 - data[:, i[0]].sum() / float(n)) * data[:, i[1]].sum()
                 if (i not in A[k]) and ((i[1], i[0]) in A[k]):
                     bs_num[k][i[0]][i[1]] = data[:, i[1]].sum() - data[:, i[0]].sum() + data[:, i[0]].sum() * error[k]
             diff_value_alt[k] = ((b - bs_num[k]) ** 2).sum() / (m ** 2 - m)

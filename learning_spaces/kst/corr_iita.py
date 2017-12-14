@@ -34,7 +34,7 @@ def corr_iita(dataset, A):
     # computation of error rate
     for k in range(len(A)):
         for i in A[k]:
-            error[k] += (b[i[0]][i[1]] / data[:, i[1]].sum())
+            error[k] += (b[i[0]][i[1]] / float(data[:, i[1]].sum()))
         if not A[k]:
             error[k] = None
         else:
@@ -54,7 +54,7 @@ def corr_iita(dataset, A):
                 if i in A[k]:
                     bs[k][i[0]][i[1]] = error[k] * data[:, i[1]].sum()
                 if (i not in A[k]) and ((i[1], i[0]) not in A[k]):
-                    bs[k][i[0]][i[1]] = (1.0 - data[:, i[0]].sum() / n) * data[:, i[1]].sum()
+                    bs[k][i[0]][i[1]] = (1.0 - data[:, i[0]].sum() / float(n)) * data[:, i[1]].sum()
                 if (i not in A[k]) and ((i[1], i[0]) in A[k]):
                     bs[k][i[0]][i[1]] = data[:, i[1]].sum() - data[:, i[0]].sum() + data[:, i[0]].sum() * error[k]
             diff_value_alt[k] = ((b - bs[k]) ** 2).sum() / (m ** 2 - m)
