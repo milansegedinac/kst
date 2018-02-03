@@ -8,3 +8,15 @@ from .imp2state import imp2state
 from .simu import simu
 from .print_iita import print_iita
 from .hasse import hasse
+from .pattern import pattern
+from .pop_iita import pop_iita
+from .pop_variance import pop_variance
+from .print_pat import print_pat
+from .print_popiita import print_popiita
+from .print_sumpopiita import print_sumpopiita
+from .print_ztest import print_ztest
+from .state2imp import state2imp
+from .summary_iita import summary_iita
+from .summary_popiita import summary_popiita
+from .variance import variance
+from .z_test import z_test
