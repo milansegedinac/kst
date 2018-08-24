@@ -4,7 +4,7 @@ KST is an open source software library with Python implementations of basic Know
 
 ## Usage
 
-KST requires installed Python 3.6. It is recommended to use the library in a separate virtual environment. A brief and practical introduction to virtual environments can be found on the following (link)[https://docs.python-guide.org/dev/virtualenvs/].
+KST requires installed Python 3.6. It is recommended to use the library in a separate virtual environment. A brief and practical introduction to virtual environments can be found on the following [link](https://docs.python-guide.org/dev/virtualenvs/).
 First, a virtual environment should be created.
 ```
 mkvirtualenv kst
