@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from kst import ob_counter
+from learning_spaces.kst import ob_counter
 
 
 def mini_iita(dataset, A):
@@ -15,7 +15,7 @@ def mini_iita(dataset, A):
 
     data = dataset
     if isinstance(dataset, pd.DataFrame):
-        data = dataset.as_matrix()
+        data = dataset.values
 
     b = ob_counter(data)
     n, m = data.shape

@@ -9,3 +9,5 @@
 
 .idea/
 /env/
+.venv
+.vscode
