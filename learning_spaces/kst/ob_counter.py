@@ -16,7 +16,7 @@ def ob_counter(dataset):
 
     data = dataset
     if isinstance(dataset, pd.DataFrame):
-        data = dataset.as_matrix()
+        data = dataset.values
 
     for i in range(m):
         for j in range(m):

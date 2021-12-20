@@ -1,11 +1,11 @@
 import sys
 import pandas as pd
 import numpy as np
-from kst import ind_gen
-from kst import ob_counter
-from kst import orig_iita
-from kst import mini_iita
-from kst import corr_iita
+from learning_spaces.kst import ind_gen
+from learning_spaces.kst import ob_counter
+from learning_spaces.kst import orig_iita
+from learning_spaces.kst import mini_iita
+from learning_spaces.kst import corr_iita
 
 
 def iita(dataset, v):
@@ -23,7 +23,7 @@ def iita(dataset, v):
 
     data = dataset
     if isinstance(dataset, pd.DataFrame):
-        data = dataset.as_matrix()
+        data = dataset.values
 
     if np.logical_not(np.logical_or(data == 0, data == 1)).sum() != 0:
         sys.exit('data must contain only 0 and 1')

@@ -1,5 +1,5 @@
 import numpy as np
-from kst import imp2state
+from learning_spaces.kst import imp2state
 
 
 def simu(items, size, ce, lg, delta, imp=None):

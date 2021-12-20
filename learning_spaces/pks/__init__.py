@@ -1,1 +1,1 @@
-from .conversion import convert_as_pattern, convert_as_bin_mat
+from learning_spaces.pks.conversion import convert_as_pattern, convert_as_bin_mat
