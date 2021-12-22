@@ -47,7 +47,7 @@ Full Example (open console to see the result):
         await pyodide.loadPackage('micropip');
         await pyodide.runPythonAsync(`
           from micropip import install
-          await install('https://raw.githubusercontent.com/milansegedinac/kst/master/learning_spaces-0.2.0-py3-none-any.whl')
+          await install('https://raw.githubusercontent.com/milansegedinac/kst/master/dist/learning_spaces-0.2.0-py3-none-any.whl')
         `);
       }
 

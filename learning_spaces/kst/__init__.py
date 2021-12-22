@@ -3,7 +3,7 @@ from learning_spaces.kst.orig_iita import orig_iita
 from learning_spaces.kst.corr_iita import corr_iita
 from learning_spaces.kst.mini_iita import mini_iita
 from learning_spaces.kst.ind_gen import ind_gen
-from learning_spaces.kst.iita import iita
+from learning_spaces.kst.iita import iita, iita_exclude_transitive
 from learning_spaces.kst.imp2state import imp2state
 from learning_spaces.kst.simu import simu
 from learning_spaces.kst.print_iita import print_iita
